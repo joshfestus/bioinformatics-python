@@ -1,0 +1,17 @@
+# Downloaded and generated files. Everything here is reproduced by
+# running the pipeline, so none of it belongs in the repository.
+genomes.fasta
+clean.fasta
+aligned.fasta
+reference.fasta
+reference.gb
+my_samples.tsv
+mutations.tsv
+per_gene.tsv
+clock.tsv
+genomes.nwk
+report.md
+logs/
+.snakemake/
+mafft.log
+*.part

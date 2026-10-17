@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+data/*.gz
+data/*.part
+data/*.fasta
+data/*.cif
+data/*.pdb
+_captures/
+.ruff_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+data/*.fai

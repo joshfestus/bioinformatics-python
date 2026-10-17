@@ -1,0 +1,95 @@
+# The whole study in one command: snakemake --cores 2 all
+configfile: "config.yaml"
+
+
+rule all:
+    input:
+        "report.md",
+
+
+rule download:
+    output:
+        "counts.tsv.gz",
+        "series_matrix.txt.gz",
+        "gene_info.tsv.gz",
+        "goa_human.gaf.gz",
+        "go-basic.obo",
+    log:
+        "logs/download.log",
+    shell:
+        "python download.py > {log} 2>&1"
+
+
+rule samples:
+    input:
+        "series_matrix.txt.gz",
+    output:
+        "samples.tsv",
+    log:
+        "logs/samples.log",
+    shell:
+        "python samples.py > {log} 2>&1"
+
+
+rule inspect:
+    input:
+        "counts.tsv.gz",
+        "samples.tsv",
+    output:
+        "qc.tsv",
+    log:
+        "logs/inspect.log",
+    shell:
+        "python inspect_samples.py > {log} 2>&1"
+
+
+rule differential_expression:
+    input:
+        "counts.tsv.gz",
+        "samples.tsv",
+        "gene_info.tsv.gz",
+    output:
+        "results.tsv",
+    threads: 2
+    log:
+        "logs/de.log",
+    shell:
+        "python de.py > {log} 2>&1"
+
+
+rule enrich:
+    input:
+        "results.tsv",
+        "goa_human.gaf.gz",
+        "go-basic.obo",
+    output:
+        "enrichment.tsv",
+    log:
+        "logs/enrich.log",
+    shell:
+        "python enrich.py > {log} 2>&1"
+
+
+rule compare:
+    input:
+        "results.tsv",
+    output:
+        "comparison.tsv",
+    log:
+        "logs/compare.log",
+    shell:
+        "python compare.py > {log} 2>&1"
+
+
+rule report:
+    input:
+        "qc.tsv",
+        "enrichment.tsv",
+        "comparison.tsv",
+        "results.tsv",
+    output:
+        "report.md",
+    log:
+        "logs/report.log",
+    shell:
+        "python report.py > {log} 2>&1"

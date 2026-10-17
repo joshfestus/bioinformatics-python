@@ -1,0 +1,107 @@
+# The whole project in one command: snakemake --cores 2 all
+configfile: "config.yaml"
+
+
+rule all:
+    input:
+        "report.md",
+
+
+rule download:
+    output:
+        "genome.gb",
+        "amr_proteins.fasta",
+        "amr_catalog.tsv",
+        "amr_version.txt",
+    log:
+        "logs/download.log",
+    shell:
+        "python download.py > {log} 2>&1"
+
+
+rule describe:
+    input:
+        "genome.gb",
+    output:
+        "replicons.tsv",
+    log:
+        "logs/describe.log",
+    shell:
+        "python describe.py > {log} 2>&1"
+
+
+rule proteins:
+    input:
+        "genome.gb",
+    output:
+        "proteins.fasta",
+    log:
+        "logs/proteins.log",
+    shell:
+        "python proteins.py > {log} 2>&1"
+
+
+rule search:
+    input:
+        "proteins.fasta",
+        "amr_proteins.fasta",
+    output:
+        "hits.tsv",
+    threads: 2
+    log:
+        "logs/search.log",
+    shell:
+        "bash search.sh > {log} 2>&1"
+
+
+rule filter:
+    input:
+        "hits.tsv",
+        "amr_catalog.tsv",
+    output:
+        "resistance.tsv",
+    params:
+        identity=config["min_identity"],
+        coverage=config["min_coverage"],
+    log:
+        "logs/filter.log",
+    shell:
+        "python filter.py --min-identity {params.identity} "
+        "--min-coverage {params.coverage} > {log} 2>&1"
+
+
+rule point:
+    input:
+        "hits.tsv",
+        "amr_mutations.tsv",
+    output:
+        "mutations.tsv",
+    log:
+        "logs/point.log",
+    shell:
+        "python point.py > {log} 2>&1"
+
+
+rule place:
+    input:
+        "resistance.tsv",
+        "genome.gb",
+    output:
+        "profile.tsv",
+    log:
+        "logs/place.log",
+    shell:
+        "python place.py > {log} 2>&1"
+
+
+rule report:
+    input:
+        "profile.tsv",
+        "mutations.tsv",
+        "replicons.tsv",
+    output:
+        "report.md",
+    log:
+        "logs/report.log",
+    shell:
+        "python report.py > {log} 2>&1"

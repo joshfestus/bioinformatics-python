@@ -1,0 +1,4 @@
+reads.bam
+reads.bam.bai
+depth.npy
+map.log

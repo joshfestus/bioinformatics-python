@@ -1,0 +1,4 @@
+# What the project's steps may change without touching their code.
+min_identity: 90 # percent identity to the reference protein
+min_coverage: 90 # percent of the reference protein the match covers
+organism: Klebsiella_pneumoniae # whose point mutation rules apply

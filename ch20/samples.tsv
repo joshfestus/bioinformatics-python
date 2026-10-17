@@ -1,0 +1,17 @@
+sample	cell_line	treatment
+GSM1275862	N61311	Untreated
+GSM1275863	N61311	Dexamethasone
+GSM1275864	N61311	Albuterol
+GSM1275865	N61311	Albuterol_Dexamethasone
+GSM1275866	N052611	Untreated
+GSM1275867	N052611	Dexamethasone
+GSM1275868	N052611	Albuterol
+GSM1275869	N052611	Albuterol_Dexamethasone
+GSM1275870	N080611	Untreated
+GSM1275871	N080611	Dexamethasone
+GSM1275872	N080611	Albuterol
+GSM1275873	N080611	Albuterol_Dexamethasone
+GSM1275874	N061011	Untreated
+GSM1275875	N061011	Dexamethasone
+GSM1275876	N061011	Albuterol
+GSM1275877	N061011	Albuterol_Dexamethasone

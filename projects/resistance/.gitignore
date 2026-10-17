@@ -1,0 +1,19 @@
+# Downloaded and generated files, all reproduced by running the pipeline.
+genome.gb
+amr_proteins.fasta
+amr_catalog.tsv
+amr_mutations.tsv
+amr_version.txt
+amr_db.*
+proteins.fasta
+hits.tsv
+replicons.tsv
+resistance.tsv
+mutations.tsv
+profile.tsv
+report.md
+logs/
+.snakemake/
+*.part
+amr_cds.fasta
+genome.fasta

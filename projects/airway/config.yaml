@@ -1,0 +1,5 @@
+# What the project's steps may change without touching their code.
+padj: 0.05 # the adjusted p value a gene must beat to count as changed
+fold_change: 1 # the log2 fold change it must also reach, so 1 is twofold
+smallest_set: 10 # GO terms with fewer genes than this are not tested
+largest_set: 500 # nor are terms with more

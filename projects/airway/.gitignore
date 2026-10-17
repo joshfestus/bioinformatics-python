@@ -1,0 +1,15 @@
+# Downloaded and generated files, all reproduced by running the pipeline.
+counts.tsv.gz
+series_matrix.txt.gz
+gene_info.tsv.gz
+goa_human.gaf.gz
+go-basic.obo
+samples.tsv
+qc.tsv
+results.tsv
+enrichment.tsv
+comparison.tsv
+report.md
+logs/
+.snakemake/
+*.part

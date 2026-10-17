@@ -1,0 +1,65 @@
+# Chapters 15 and 16 as one pipeline: map the reads, call variants on a
+# one copy genome, and annotate them. Run with: snakemake --cores 2
+
+configfile: "config.yaml"
+
+
+rule all:
+    input:
+        "results/variants.tsv",
+
+
+rule map_reads:
+    input:
+        reference=config["reference"],
+        reads_1=config["reads_1"],
+        reads_2=config["reads_2"],
+    output:
+        "results/reads.bam",
+    log:
+        "logs/map_reads.log",
+    threads: 2
+    shell:
+        "minimap2 -ax sr -t {threads} {input.reference} {input.reads_1}"
+        " {input.reads_2} 2> {log} | samtools sort -o {output} -"
+
+
+rule index_reads:
+    input:
+        "results/reads.bam",
+    output:
+        "results/reads.bam.bai",
+    shell:
+        "samtools index {input}"
+
+
+rule call_variants:
+    input:
+        reference=config["reference"],
+        bam="results/reads.bam",
+        bai="results/reads.bam.bai",
+    output:
+        "results/calls.vcf.gz",
+    log:
+        "logs/call_variants.log",
+    shell:
+        "bcftools mpileup -Ou -f {input.reference} {input.bam} 2> {log}"
+        " | bcftools call --ploidy 1 -mv -Oz -o {output} 2>> {log}"
+
+
+rule annotate:
+    input:
+        vcf="results/calls.vcf.gz",
+        annotation=config["annotation"],
+        reference=config["reference"],
+    output:
+        "results/variants.tsv",
+    log:
+        "logs/annotate.log",
+    params:
+        min_qual=config["min_qual"],
+        min_depth=config["min_depth"],
+    shell:
+        "python variants.py {input.vcf} {input.annotation}"
+        " {input.reference} -o {output} --min-qual {params.min_qual}"
+        " --min-depth {params.min_depth} 2> {log}"

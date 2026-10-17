@@ -1,0 +1,5 @@
+results/
+logs/
+.snakemake/
+versions.txt
+.pytest_cache/

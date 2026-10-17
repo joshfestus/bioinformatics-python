@@ -1,0 +1,13 @@
+[M::mm_idx_gen::0.222*1.01] collected minimizers
+[M::mm_idx_gen::0.259*1.13] sorted minimizers
+[M::main::0.259*1.13] loaded/built the index for 1 target sequence(s)
+[M::mm_mapopt_update::0.259*1.13] mid_occ = 1000
+[M::mm_idx_stat] kmer size: 21; skip: 11; is_hpc: 0; #seq: 1
+[M::mm_idx_stat::0.267*1.13] distinct minimizers: 754322 (99.21% are singletons); average occurrences: 1.022; average spacing: 6.004; total length: 4629812
+[M::worker_pipeline::9.226*2.37] mapped 333334 sequences
+[M::worker_pipeline::14.250*2.33] mapped 333334 sequences
+[M::worker_pipeline::17.662*2.30] mapped 333334 sequences
+[M::worker_pipeline::19.597*2.26] mapped 199998 sequences
+[M::main] Version: 2.27-r1193
+[M::main] CMD: minimap2 -t 2 -ax sr ../data/rel606.fasta ../data/SRR2584863_1.fastq.gz ../data/SRR2584863_2.fastq.gz
+[M::main] Real time: 19.610 sec; CPU: 44.304 sec; Peak RSS: 0.480 GB

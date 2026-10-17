@@ -1,0 +1,22 @@
+[project]
+name = "bioinformatics-python"
+version = "1.0.0"
+description = "Code for Bioinformatics with Python for Beginners, by Josh Festus"
+requires-python = ">=3.14"
+dependencies = [
+    "biopython==1.88",
+    "logomaker==0.8.7",
+    "matplotlib==3.11.2",
+    "numpy==2.5.3",
+    "pandas==3.0.6",
+    "pydeseq2==0.5.4",
+    "pysam==0.24.1",
+    "scikit-learn==1.9.1",
+    "scipy==1.18.1",
+    "snakemake==9.27.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+]

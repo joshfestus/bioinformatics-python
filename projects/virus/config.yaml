@@ -1,0 +1,4 @@
+# What the project's steps may change without touching their code.
+min_length: 29000 # a genome shorter than this is dropped
+max_unknown: 0.01 # the share of bases that may be N or other ambiguity
+per_lineage: 10 # genomes to choose from each lineage

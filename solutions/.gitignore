@@ -1,0 +1,5 @@
+# Figures and downloads the solutions produce when they run.
+*.png
+*.fasta
+*.tsv
+*.tbi

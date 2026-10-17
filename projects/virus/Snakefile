@@ -1,0 +1,107 @@
+# The whole project in one command: snakemake --cores 2 all
+configfile: "config.yaml"
+
+
+rule all:
+    input:
+        "report.md",
+        "genomes.nwk",
+
+
+rule download:
+    output:
+        "genomes.fasta",
+        "reference.fasta",
+        "reference.gb",
+    log:
+        "logs/download.log",
+    shell:
+        "python download.py > {log} 2>&1"
+
+
+rule clean:
+    input:
+        "genomes.fasta",
+    output:
+        "clean.fasta",
+    params:
+        min_length=config["min_length"],
+        max_unknown=config["max_unknown"],
+    log:
+        "logs/clean.log",
+    shell:
+        "python clean.py --min-length {params.min_length} "
+        "--max-unknown {params.max_unknown} > {log} 2>&1"
+
+
+rule align:
+    input:
+        "clean.fasta",
+        "reference.fasta",
+    output:
+        "aligned.fasta",
+    threads: 2
+    log:
+        "logs/align.log",
+    shell:
+        "mafft --6merpair --thread {threads} --keeplength "
+        "--addfragments {input[0]} {input[1]} > {output} 2> {log}"
+
+
+rule mutations:
+    input:
+        "aligned.fasta",
+        "reference.gb",
+    output:
+        "mutations.tsv",
+    log:
+        "logs/mutations.log",
+    shell:
+        "python mutations.py > {log} 2>&1"
+
+
+rule locate:
+    input:
+        "mutations.tsv",
+    output:
+        "per_gene.tsv",
+    log:
+        "logs/locate.log",
+    shell:
+        "python locate.py > {log} 2>&1"
+
+
+rule timeline:
+    input:
+        "mutations.tsv",
+        "clean.fasta",
+    output:
+        "clock.tsv",
+    log:
+        "logs/timeline.log",
+    shell:
+        "python timeline.py > {log} 2>&1"
+
+
+rule tree:
+    input:
+        "aligned.fasta",
+    output:
+        "genomes.nwk",
+    log:
+        "logs/tree.log",
+    shell:
+        "python tree.py > {log} 2>&1"
+
+
+rule report:
+    input:
+        "mutations.tsv",
+        "clock.tsv",
+        "per_gene.tsv",
+    output:
+        "report.md",
+    log:
+        "logs/report.log",
+    shell:
+        "python report.py > {log} 2>&1"
